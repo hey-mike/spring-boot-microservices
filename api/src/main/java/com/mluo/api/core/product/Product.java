@@ -1,4 +1,4 @@
-package se.magnus.api.core.product;
+package com.mluo.api.core.product;
 
 public class Product {
     private final int productId;

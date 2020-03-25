@@ -1,4 +1,4 @@
-package se.magnus.util.http;
+package com.mluo.util.http;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

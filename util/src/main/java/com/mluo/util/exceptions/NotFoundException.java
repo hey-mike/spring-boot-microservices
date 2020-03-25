@@ -1,4 +1,4 @@
-package se.magnus.util.exceptions;
+package com.mluo.util.exceptions;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException() {

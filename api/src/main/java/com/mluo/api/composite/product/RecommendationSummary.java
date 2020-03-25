@@ -1,4 +1,4 @@
-package se.magnus.api.composite.product;
+package com.mluo.api.composite.product;
 
 public class RecommendationSummary {
 

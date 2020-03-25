@@ -1,27 +1,27 @@
-package se.magnus.api.core.review;
+package com.mluo.api.core.recommendation;
 
-public class Review {
+public class Recommendation {
     private final int productId;
-    private final int reviewId;
+    private final int recommendationId;
     private final String author;
-    private final String subject;
+    private final int rate;
     private final String content;
     private final String serviceAddress;
 
-    public Review() {
+    public Recommendation() {
         productId = 0;
-        reviewId = 0;
+        recommendationId = 0;
         author = null;
-        subject = null;
+        rate = 0;
         content = null;
         serviceAddress = null;
     }
 
-    public Review(int productId, int reviewId, String author, String subject, String content, String serviceAddress) {
+    public Recommendation(int productId, int recommendationId, String author, int rate, String content, String serviceAddress) {
         this.productId = productId;
-        this.reviewId = reviewId;
+        this.recommendationId = recommendationId;
         this.author = author;
-        this.subject = subject;
+        this.rate = rate;
         this.content = content;
         this.serviceAddress = serviceAddress;
     }
@@ -30,16 +30,16 @@ public class Review {
         return productId;
     }
 
-    public int getReviewId() {
-        return reviewId;
+    public int getRecommendationId() {
+        return recommendationId;
     }
 
     public String getAuthor() {
         return author;
     }
 
-    public String getSubject() {
-        return subject;
+    public int getRate() {
+        return rate;
     }
 
     public String getContent() {

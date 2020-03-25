@@ -1,4 +1,4 @@
-package se.magnus.api.core.recommendation;
+package com.mluo.api.core.recommendation;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
