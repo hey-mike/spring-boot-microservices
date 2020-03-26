@@ -10,13 +10,13 @@ import org.springframework.web.client.RestTemplate;
 @ComponentScan("com.mluo")
 public class ProductCompositeServiceApplication {
 
-	@Bean
-	RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ProductCompositeServiceApplication.class, args);
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(ProductCompositeServiceApplication.class, args);
-	}
+    @Bean
+    RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
 }

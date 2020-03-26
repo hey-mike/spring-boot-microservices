@@ -9,7 +9,6 @@ import com.mluo.util.http.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 public class ProductCompositeServiceImpl implements ProductCompositeService {
 
     private final ServiceUtil serviceUtil;
-    private  ProductCompositeIntegration integration;
+    private ProductCompositeIntegration integration;
 
     @Autowired
     public ProductCompositeServiceImpl(ServiceUtil serviceUtil, ProductCompositeIntegration integration) {
@@ -52,7 +51,7 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
                         .collect(Collectors.toList());
 
         // 3. Copy summary review info, if available
-        List<ReviewSummary> reviewSummaries = (reviews == null)  ? null :
+        List<ReviewSummary> reviewSummaries = (reviews == null) ? null :
                 reviews.stream()
                         .map(r -> new ReviewSummary(r.getReviewId(), r.getAuthor(), r.getSubject()))
                         .collect(Collectors.toList());
