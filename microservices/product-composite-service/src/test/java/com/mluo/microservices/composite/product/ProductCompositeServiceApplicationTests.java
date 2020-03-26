@@ -7,13 +7,14 @@ import com.mluo.microservices.composite.product.services.ProductCompositeIntegra
 import com.mluo.util.exceptions.InvalidInputException;
 import com.mluo.util.exceptions.NotFoundException;
 import org.junit.Ignore;
-import org.junit.jupiter.api.Test;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -22,7 +23,6 @@ import static java.util.Collections.singletonList;
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=RANDOM_PORT)
@@ -63,15 +63,41 @@ public class ProductCompositeServiceApplicationTests {
 
 		client.get()
 				.uri("/product-composite/" + PRODUCT_ID_OK)
-				.accept(APPLICATION_JSON_UTF8)
+				.accept(MediaType.APPLICATION_JSON)
 				.exchange()
 				.expectStatus().isOk()
-				.expectHeader().contentType(APPLICATION_JSON_UTF8)
+				.expectHeader().contentType(MediaType.APPLICATION_JSON)
 				.expectBody()
 				.jsonPath("$.productId").isEqualTo(PRODUCT_ID_OK)
 				.jsonPath("$.recommendations.length()").isEqualTo(1)
 				.jsonPath("$.reviews.length()").isEqualTo(1);
 	}
 
+	@org.junit.Test
+	public void getProductNotFound() {
 
+		client.get()
+				.uri("/product-composite/" + PRODUCT_ID_NOT_FOUND)
+				.accept(MediaType.APPLICATION_JSON)
+				.exchange()
+				.expectStatus().isNotFound()
+				.expectHeader().contentType(MediaType.APPLICATION_JSON)
+				.expectBody()
+				.jsonPath("$.path").isEqualTo("/product-composite/" + PRODUCT_ID_NOT_FOUND)
+				.jsonPath("$.message").isEqualTo("NOT FOUND: " + PRODUCT_ID_NOT_FOUND);
+	}
+
+	@org.junit.Test
+	public void getProductInvalidInput() {
+
+		client.get()
+				.uri("/product-composite/" + PRODUCT_ID_INVALID)
+				.accept(MediaType.APPLICATION_JSON)
+				.exchange()
+				.expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
+				.expectHeader().contentType(MediaType.APPLICATION_JSON)
+				.expectBody()
+				.jsonPath("$.path").isEqualTo("/product-composite/" + PRODUCT_ID_INVALID)
+				.jsonPath("$.message").isEqualTo("INVALID: " + PRODUCT_ID_INVALID);
+	}
 }
