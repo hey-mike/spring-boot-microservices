@@ -2,12 +2,12 @@ package com.mluo.microservices.core.product;
 
 import com.mluo.microservices.core.product.persistance.ProductEntity;
 import com.mluo.microservices.core.product.persistance.ProductRepository;
-import com.mongodb.DuplicateKeyException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -60,7 +60,7 @@ public class PersistenceTests {
         repository.save(savedEntity);
 
         ProductEntity foundEntity = repository.findById(savedEntity.getId()).get();
-        assertEquals(1, (long)foundEntity.getVersion());
+        assertEquals(1, (long) foundEntity.getVersion());
         assertEquals("n2", foundEntity.getName());
     }
 
@@ -102,11 +102,12 @@ public class PersistenceTests {
             repository.save(entity2);
 
             fail("Expected an OptimisticLockingFailureException");
-        } catch (OptimisticLockingFailureException e) {}
+        } catch (OptimisticLockingFailureException e) {
+        }
 
         // Get the updated entity from the database and verify its new sate
         ProductEntity updatedEntity = repository.findById(savedEntity.getId()).get();
-        assertEquals(1, (int)updatedEntity.getVersion());
+        assertEquals(1, (int) updatedEntity.getVersion());
         assertEquals("n1", updatedEntity.getName());
     }
 
@@ -135,10 +136,10 @@ public class PersistenceTests {
     }
 
     private void assertEqualsProduct(ProductEntity expectedEntity, ProductEntity actualEntity) {
-        assertEquals(expectedEntity.getId(),               actualEntity.getId());
-        assertEquals(expectedEntity.getVersion(),          actualEntity.getVersion());
-        assertEquals(expectedEntity.getProductId(),        actualEntity.getProductId());
-        assertEquals(expectedEntity.getName(),           actualEntity.getName());
-        assertEquals(expectedEntity.getWeight(),           actualEntity.getWeight());
+        assertEquals(expectedEntity.getId(), actualEntity.getId());
+        assertEquals(expectedEntity.getVersion(), actualEntity.getVersion());
+        assertEquals(expectedEntity.getProductId(), actualEntity.getProductId());
+        assertEquals(expectedEntity.getName(), actualEntity.getName());
+        assertEquals(expectedEntity.getWeight(), actualEntity.getWeight());
     }
 }

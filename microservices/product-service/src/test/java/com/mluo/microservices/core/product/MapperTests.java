@@ -19,6 +19,7 @@ public class MapperTests {
         Product api = new Product(1, "n", 1, "sa");
 
         ProductEntity entity = mapper.apiToEntity(api);
+        System.out.println(entity);
 
         assertEquals(api.getProductId(), entity.getProductId());
         assertEquals(api.getProductId(), entity.getProductId());
