@@ -1,4 +1,4 @@
-package com.mluo.microservices.core.product;
+package com.mluo.microservices.core.product.serivces;
 
 import com.mluo.util.exceptions.InvalidInputException;
 import com.mluo.util.exceptions.NotFoundException;
