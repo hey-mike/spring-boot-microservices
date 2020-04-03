@@ -59,7 +59,7 @@ app:
 logging:
   level:
     root: INFO
-    com.mluo: DEBUG
+    se.magnus: DEBUG
 
 ---
 spring.profiles: docker
