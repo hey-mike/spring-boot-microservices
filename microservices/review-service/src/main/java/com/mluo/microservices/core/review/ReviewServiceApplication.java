@@ -2,7 +2,9 @@ package com.mluo.microservices.core.review;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
+@ComponentScan("com.mluo")
 @SpringBootApplication
 public class ReviewServiceApplication {
 
