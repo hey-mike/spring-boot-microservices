@@ -3,20 +3,25 @@ package com.mluo.microservices.core.product;
 import com.mluo.api.core.product.Product;
 import com.mluo.microservices.core.product.persistance.ProductRepository;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Mono;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.HttpStatus.*;
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
-import static reactor.core.publisher.Mono.just;
 
-@SpringBootTest
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = RANDOM_PORT, properties = {"spring.data.mongodb.port: 0"})
 @AutoConfigureWebTestClient
 class ProductServiceApplicationTests {
     @Autowired
@@ -27,6 +32,7 @@ class ProductServiceApplicationTests {
 
     @Before
     public void setupDb() {
+        System.out.println("setupDb");
         repository.deleteAll();
     }
 
@@ -105,31 +111,33 @@ class ProductServiceApplicationTests {
     private WebTestClient.BodyContentSpec getAndVerifyProduct(String productIdPath, HttpStatus expectedStatus) {
         return client.get()
                 .uri("/product" + productIdPath)
-                .accept(APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isEqualTo(expectedStatus)
-                .expectHeader().contentType(APPLICATION_JSON_UTF8)
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBody();
     }
 
     private WebTestClient.BodyContentSpec postAndVerifyProduct(int productId, HttpStatus expectedStatus) {
         Product product = new Product(productId, "Name " + productId, productId, "SA");
+
         return client.post()
                 .uri("/product")
-                .body(just(product), Product.class)
-                .accept(APPLICATION_JSON_UTF8)
+                .body(Mono.just(product), Product.class)
+                .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isEqualTo(expectedStatus)
-                .expectHeader().contentType(APPLICATION_JSON_UTF8)
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBody();
     }
 
     private WebTestClient.BodyContentSpec deleteAndVerifyProduct(int productId, HttpStatus expectedStatus) {
         return client.delete()
                 .uri("/product/" + productId)
-                .accept(APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isEqualTo(expectedStatus)
                 .expectBody();
     }
+
 }

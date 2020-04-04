@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="products")
+@Document(collection = "products")
 public class ProductEntity {
 
     @Id
@@ -67,5 +67,10 @@ public class ProductEntity {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "[name=" + name + "]";
     }
 }

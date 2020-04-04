@@ -8,4 +8,6 @@ logging:
 ---
 spring.profiles: docker
 
+spring.data.mongodb.host: mongodb
+
 server.port: 8080
