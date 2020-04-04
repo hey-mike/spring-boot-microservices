@@ -7,10 +7,10 @@ import com.mluo.microservices.core.product.persistance.ProductRepository;
 import com.mluo.util.exceptions.InvalidInputException;
 import com.mluo.util.exceptions.NotFoundException;
 import com.mluo.util.http.ServiceUtil;
-import com.mongodb.DuplicateKeyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

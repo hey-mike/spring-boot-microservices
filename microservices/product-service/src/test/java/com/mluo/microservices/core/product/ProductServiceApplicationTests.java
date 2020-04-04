@@ -3,6 +3,7 @@ package com.mluo.microservices.core.product;
 import com.mluo.api.core.product.Product;
 import com.mluo.microservices.core.product.persistance.ProductRepository;
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,8 @@ class ProductServiceApplicationTests {
     @Autowired
     private ProductRepository repository;
 
-    @Before
+    @BeforeEach
     public void setupDb() {
-        System.out.println("setupDb");
         repository.deleteAll();
     }
 
