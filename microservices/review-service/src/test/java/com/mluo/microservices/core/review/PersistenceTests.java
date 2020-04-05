@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED;
 
 @DataJpaTest
-@Transactional(propagation = NOT_SUPPORTED)
+@Transactional(propagation = NOT_SUPPORTED) // need to make OptimisticLockingFailureException
 public class PersistenceTests {
     @Autowired
     private ReviewRepository repository;
@@ -96,6 +96,7 @@ public class PersistenceTests {
 
         //  Update the entity using the second entity object.
         // This should fail since the second entity now holds a old version number, i.e. a Optimistic Lock Error
+
         try {
             entity2.setAuthor("a2");
             repository.save(entity2);
