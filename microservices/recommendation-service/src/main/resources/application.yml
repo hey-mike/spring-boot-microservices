@@ -1,4 +1,5 @@
 server.port: 7002
+spring.data.mongodb.auto-index-creation: true
 
 logging:
   level:

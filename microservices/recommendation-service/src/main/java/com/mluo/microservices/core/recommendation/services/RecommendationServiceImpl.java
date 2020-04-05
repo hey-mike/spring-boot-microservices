@@ -1,18 +1,17 @@
 package com.mluo.microservices.core.recommendation.services;
 
+import com.mluo.api.core.recommendation.Recommendation;
+import com.mluo.api.core.recommendation.RecommendationService;
 import com.mluo.microservices.core.recommendation.persistence.RecommendationEntity;
 import com.mluo.microservices.core.recommendation.persistence.RecommendationRepository;
+import com.mluo.util.exceptions.InvalidInputException;
+import com.mluo.util.http.ServiceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.RestController;
-import com.mluo.api.core.recommendation.Recommendation;
-import com.mluo.api.core.recommendation.RecommendationService;
-import com.mluo.util.exceptions.InvalidInputException;
-import com.mluo.util.http.ServiceUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
