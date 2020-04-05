@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @Api("REST API for composite product information.")
@@ -27,7 +28,7 @@ public interface ProductCompositeService {
     })
     @PostMapping(
             value = "/product-composite",
-            consumes = "application/json")
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     void createCompositeProduct(@RequestBody ProductAggregate body);
 
 

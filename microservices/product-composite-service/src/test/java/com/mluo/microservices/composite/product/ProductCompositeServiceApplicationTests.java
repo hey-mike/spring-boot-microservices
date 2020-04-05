@@ -7,12 +7,14 @@ import com.mluo.api.core.product.Product;
 import com.mluo.api.core.recommendation.Recommendation;
 import com.mluo.api.core.review.Review;
 import com.mluo.microservices.composite.product.services.ProductCompositeIntegration;
+import com.mluo.microservices.composite.product.services.ProductCompositeServiceImpl;
 import com.mluo.util.exceptions.InvalidInputException;
 import com.mluo.util.exceptions.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
@@ -145,11 +147,10 @@ public class ProductCompositeServiceApplicationTests {
 
 		client.post()
 				.uri("/product-composite")
-				.accept(MediaType.APPLICATION_JSON)
 				.body(Mono.just(compositeProduct), ProductAggregate.class)
 				.exchange()
-				.expectHeader().contentType(MediaType.APPLICATION_JSON)
-				.expectStatus().isEqualTo(expectedStatus);
+				.expectStatus().isEqualTo(expectedStatus)
+				.expectBody();
 	}
 
 	private void deleteAndVerifyProduct(int productId, HttpStatus expectedStatus) {

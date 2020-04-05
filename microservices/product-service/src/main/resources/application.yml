@@ -10,6 +10,7 @@ logging:
   level:
     root: INFO
     com.luo: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
 
 ---
 spring.profiles: docker
