@@ -3,8 +3,9 @@ package com.mluo.microservices.core.product;
 import com.mluo.microservices.core.product.persistance.ProductEntity;
 import com.mluo.microservices.core.product.persistance.ProductRepository;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.dao.DuplicateKeyException;
@@ -20,9 +21,9 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 
-@RunWith(SpringRunner.class)
 @DataMongoTest
 public class PersistenceTests {
 
@@ -31,7 +32,7 @@ public class PersistenceTests {
 
     private ProductEntity savedEntity;
 
-    @Before
+    @BeforeEach
     public void setupDb() {
         repository.deleteAll();
 
@@ -78,10 +79,12 @@ public class PersistenceTests {
         assertEqualsProduct(savedEntity, entity.get());
     }
 
-    @Test(expected = DuplicateKeyException.class)
+    @Test
     public void duplicateError() {
         ProductEntity entity = new ProductEntity(savedEntity.getProductId(), "n", 1);
-        repository.save(entity);
+        assertThrows(DuplicateKeyException.class, () -> {
+            repository.save(entity);
+        });
     }
 
     @Test
