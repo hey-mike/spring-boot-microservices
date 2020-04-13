@@ -2,28 +2,18 @@ package com.mluo.microservices.core.product;
 
 import com.mluo.microservices.core.product.persistance.ProductEntity;
 import com.mluo.microservices.core.product.persistance.ProductRepository;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
-
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.test.StepVerifier;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import static org.junit.Assert.assertEquals;
 
-import static java.util.stream.IntStream.rangeClosed;
-import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.springframework.data.domain.Sort.Direction.ASC;
 
 @DataMongoTest
 public class PersistenceTests {
@@ -35,7 +25,7 @@ public class PersistenceTests {
 
     @BeforeEach
     public void setupDb() {
-        repository.deleteAll();
+        StepVerifier.create(repository.deleteAll()).verifyComplete();
 
         ProductEntity entity = new ProductEntity(1, "n", 1);
         StepVerifier.create(repository.save(entity))
