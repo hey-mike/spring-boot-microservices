@@ -32,6 +32,10 @@ public class ProductCompositeServiceApplication {
     @Value("${api.common.contact.url}")       String apiContactUrl;
     @Value("${api.common.contact.email}")     String apiContactEmail;
 
+    public static void main(String[] args) {
+        SpringApplication.run(ProductCompositeServiceApplication.class, args);
+    }
+
     @Bean
     public Docket apiDocumentation() {
         return new Docket(SWAGGER_2)
@@ -53,13 +57,5 @@ public class ProductCompositeServiceApplication {
                 ));
     }
 
-    public static void main(String[] args) {
-        SpringApplication.run(ProductCompositeServiceApplication.class, args);
-    }
-
-    @Bean
-    RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
 
 }

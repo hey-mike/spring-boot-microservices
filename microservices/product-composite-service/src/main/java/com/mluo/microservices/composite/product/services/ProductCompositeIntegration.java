@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.actuate.health.Health;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.core.ParameterizedTypeReference;
@@ -43,7 +44,6 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
 
     private static final Logger LOG = LoggerFactory.getLogger(ProductCompositeIntegration.class);
 
-    private final RestTemplate restTemplate;
     private final WebClient webClient;
     private final ObjectMapper mapper;
 
@@ -57,7 +57,6 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
     public ProductCompositeIntegration(
             MessageSources messageSources,
             WebClient.Builder webClient,
-            RestTemplate restTemplate,
             ObjectMapper mapper,
 
             @Value("${app.product-service.host}") String productServiceHost,
@@ -70,7 +69,6 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
             @Value("${app.review-service.port}") int reviewServicePort
     ) {
         this.messageSources = messageSources;
-        this.restTemplate = restTemplate;
         this.webClient = webClient.build();
         this.mapper = mapper;
 
@@ -144,6 +142,28 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
     @Override
     public void deleteReviews(int productId) {
         messageSources.outputReviews().send(MessageBuilder.withPayload(new Event(DELETE, productId, null)).build());
+    }
+
+
+    public Mono<Health> getProductHealth() {
+        return getHealth(productServiceUrl);
+    }
+
+    public Mono<Health> getRecommendationHealth() {
+        return getHealth(recommendationServiceUrl);
+    }
+
+    public Mono<Health> getReviewHealth() {
+        return getHealth(reviewServiceUrl);
+    }
+
+    private Mono<Health> getHealth(String url) {
+        url += "/actuator/health";
+        LOG.debug("Will call the Health API on URL: {}", url);
+        return webClient.get().uri(url).retrieve().bodyToMono(String.class)
+                .map(s -> new Health.Builder().up().build())
+                .onErrorResume(ex -> Mono.just(new Health.Builder().down(ex).build()))
+                .log();
     }
 
     private Throwable handleException(Throwable ex) {

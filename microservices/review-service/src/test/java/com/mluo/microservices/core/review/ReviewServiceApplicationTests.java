@@ -120,7 +120,7 @@ class ReviewServiceApplicationTests {
 
 		getAndVerifyReviewsByProductId("?productId=" + productIdInvalid, UNPROCESSABLE_ENTITY)
 				.jsonPath("$.path").isEqualTo("/review")
-				.jsonPath("$.message").isEqualTo("Invalid productId: " + productIdInvalid);
+				.jsonPath("$.message").isEqualTo("Invalid productId:" + productIdInvalid);
 	}
 
 	private WebTestClient.BodyContentSpec getAndVerifyReviewsByProductId(int productId, HttpStatus expectedStatus) {
