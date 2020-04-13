@@ -1,5 +1,4 @@
 api:
-
   common:
     version: 1.0.0
     title: Sample API
@@ -78,15 +77,15 @@ spring.cloud.stream:
       producer:
         required-groups: auditGroup
 
-    spring.cloud.stream.kafka.binder:
-      brokers: 127.0.0.1
-      defaultBrokerPort: 9092
+spring.cloud.stream.kafka.binder:
+  brokers: 127.0.0.1
+  defaultBrokerPort: 9092
 
-    spring.rabbitmq:
-      host: 127.0.0.1
-      port: 5672
-      username: guest
-      password: guest
+spring.rabbitmq:
+  host: 127.0.0.1
+  port: 5672
+  username: guest
+  password: guest
 
 logging:
   level:
