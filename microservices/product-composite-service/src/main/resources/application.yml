@@ -93,6 +93,10 @@ logging:
     root: INFO
     com.mluo: DEBUG
 
+
+management.endpoint.health.show-details: "ALWAYS"
+management.endpoints.web.exposure.include: "*"
+
 ---
 spring.profiles: docker
 
