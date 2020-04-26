@@ -45,6 +45,9 @@ public class ProductServiceImpl implements ProductService {
                         ex -> new InvalidInputException("Duplicate key, Product Id: " + body.getProductId()))
                 .map(e -> mapper.entityToApi(e));
 
+
+        LOG.debug("createProduct: tries to create an entity: {}");
+
         return newEntity.block();
     }
 
